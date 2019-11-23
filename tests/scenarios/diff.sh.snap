@@ -6,13 +6,13 @@
 ##[debug]param: chart = "/usr/src/charts/app"
 ##[debug]param: values = "{"replicaCount": 1, "image": {"repository": "nginx", "tag": "latest"}}"
 ##[debug]param: dryRun = ""
-##[debug]param: task = ""
+##[debug]param: task = "diff"
 ##[debug]param: version = "1234"
 ##[debug]param: secrets = "{"secret":"val"}"
 ##[debug]param: valueFiles = "[]"
 ##[debug]param: removeCanary = 
 ##[debug]env: KUBECONFIG="undefined"
 ##[debug]rendering value files [./values.yml] with: {"secrets":{"secret":"val"}}
-[command]helm3 upgrade app /usr/src/charts/app --namespace=default --install --wait --atomic --set=app.name=app --set=app.version=1234 --values=./values.yml
-helm upgrade app /usr/src/charts/app --namespace=default --install --wait --atomic --set=app.name=app --set=app.version=1234 --values=./values.yml
+[command]helm diff upgrade app /usr/src/charts/app --namespace=default --set=app.name=app --set=app.version=1234 --values=./values.yml
+helm diff upgrade app /usr/src/charts/app --namespace=default --set=app.name=app --set=app.version=1234 --values=./values.yml
 ##[debug]not setting deployment status

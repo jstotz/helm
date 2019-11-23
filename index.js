@@ -35,7 +35,7 @@ async function status(state) {
       log_url: url,
       target_url: url,
       headers: {
-        accept: 'application/vnd.github.ant-man-preview+json'
+        accept: "application/vnd.github.ant-man-preview+json"
       }
     });
   } catch (error) {
@@ -182,18 +182,26 @@ async function run() {
     core.debug(`param: removeCanary = ${removeCanary}`);
 
     // Setup command options and arguments.
-    const opts = { env: {
-      KUBECONFIG: process.env.KUBECONFIG,
-    }};
+    const opts = {
+      env: {
+        KUBECONFIG: process.env.KUBECONFIG
+      }
+    };
     const args = [
       "upgrade",
       release,
       chart,
-      "--install",
-      "--wait",
-      "--atomic",
-      `--namespace=${namespace}`,
+      `--namespace=${namespace}`
     ];
+    if (task === "diff") {
+      args.unshift("diff")
+    } else {
+      args.push(
+        "--install",
+        "--wait",
+        "--atomic",
+      )
+    }
     if (dryRun) args.push("--dry-run");
     if (appName) args.push(`--set=app.name=${appName}`);
     if (version) args.push(`--set=app.version=${version}`);
@@ -219,7 +227,7 @@ async function run() {
     // Render value files using github variables.
     await renderFiles(valueFiles.concat(["./values.yml"]), {
       secrets,
-      deployment: context.payload.deployment,
+      deployment: context.payload.deployment
     });
 
     // Remove the canary deployment before continuing.
@@ -237,6 +245,8 @@ async function run() {
         ...opts,
         ignoreReturnCode: true
       });
+    } else if (task === "diff") {
+      await exec.exec(helm, args, opts);
     } else {
       await exec.exec(helm, args, opts);
     }
