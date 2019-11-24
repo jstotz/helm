@@ -187,22 +187,13 @@ async function run() {
         KUBECONFIG: process.env.KUBECONFIG
       }
     };
-    const args = [
-      "upgrade",
-      release,
-      chart,
-      `--namespace=${namespace}`
-    ];
+    const args = ["upgrade", release, chart, `--namespace=${namespace}`];
     if (task === "diff") {
-      args.unshift("diff")
+      args.unshift("diff");
     } else {
-      args.push(
-        "--install",
-        "--wait",
-        "--atomic",
-      )
+      args.push("--install", "--wait", "--atomic");
     }
-    if (dryRun) args.push("--dry-run");
+    if (dryRun && task !== "diff") args.push("--dry-run");
     if (appName) args.push(`--set=app.name=${appName}`);
     if (version) args.push(`--set=app.version=${version}`);
     valueFiles.forEach(f => args.push(`--values=${f}`));
