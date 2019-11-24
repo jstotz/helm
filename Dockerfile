@@ -18,7 +18,7 @@ RUN apk add --no-cache ca-certificates jq curl bash nodejs git && \
     rm -rf linux-amd64 && \
     # Init version 2 helm:
     helm init --client-only && \
-    helm plugin install https://github.com/databus23/helm-diff --version master
+    helm plugin install https://github.com/databus23/helm-diff --version v2.11.0+5
 
 
 COPY . /usr/src/
