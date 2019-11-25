@@ -184,6 +184,7 @@ async function run() {
     // Setup command options and arguments.
     const opts = {
       env: {
+        HELM_HOME: process.env.HELM_HOME,
         PATH: process.env.PATH,
         KUBECONFIG: process.env.KUBECONFIG
       }
