@@ -239,20 +239,6 @@ async function run() {
         ignoreReturnCode: true
       });
     } else if (task === "diff") {
-      core.debug("installing helm diff plugin");
-      core.debug("env", process.env);
-      await exec.exec("which", ["git"])
-      await exec.exec(
-        helm,
-        [
-          "plugin",
-          "install",
-          "https://github.com/databus23/helm-diff",
-          "--version",
-          "master"
-        ],
-        opts
-      );
       await exec.exec(helm, args, opts);
     } else {
       await exec.exec(helm, args, opts);
