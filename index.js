@@ -184,6 +184,7 @@ async function run() {
     // Setup command options and arguments.
     const opts = {
       env: {
+        PATH: process.env.PATH,
         KUBECONFIG: process.env.KUBECONFIG
       }
     };
@@ -238,6 +239,8 @@ async function run() {
       });
     } else if (task === "diff") {
       core.debug("installing helm diff plugin");
+      core.debug("env", process.env);
+      await exec.exec("which", ["git"])
       await exec.exec(
         helm,
         [
